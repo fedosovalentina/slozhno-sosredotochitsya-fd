@@ -1,5 +1,355 @@
 /* Основные стили проекта. Это стили для темы, которую вы верстаете первой. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: 1px dotted yellowgreen;
+}
 
 .page {
-  /* сохраните в разметке и стилях класс page у тега body. Он удобен, чтобы составлять селекторы для разных цветовых тем. */
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  max-width: 1024px; /* Ограничиваю экран */
+  padding: 10px;
+  color: var(--text-color);
+  font-family: var(--main-font-family), sans-serif;
+  background-color: var(--bg-color);
+
+  /* Фоновое изображение: центрируется, масштабируется, сохраняя пропорции, 
+  фиксируется на месте при прокрутке*/
+  background-image: var(--background-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/********************* Шапка *********************/
+
+.header {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto auto auto;
+}
+
+/* Декоративные уголки */
+
+.decorated__zone {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.decorated__zone::before,
+.decorated__zone::after {
+  content: "";
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  pointer-events: none;
+}
+
+/* Верхний правый угол */
+.decorated__zone::before {
+  top: 0;
+  right: 0;
+  border-top: 1px solid var(--accent-color);
+  border-right: 1px solid var(--accent-color);
+  transform: translate(-1px, 1px); /* "внутрь" от края */
+}
+
+/* Нижний левый угол */
+.decorated__zone::after {
+  bottom: 0;
+  left: 0;
+  border-bottom: 1px solid var(--accent-color);
+  border-left: 1px solid var(--accent-color);
+  transform: translate(1px, -1px); /* "внутрь" от края */
+}
+
+/********************* Меню *********************/
+
+.header__theme-menu-list {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  margin-top: 65px;
+  list-style: none;
+}
+
+.header__theme-menu-button {
+  border: 1px solid transparent;
+  color: var(--accent-color);
+  font: inherit;
+  text-align: center;
+  text-transform: lowercase;
+  background: none;
+  cursor: pointer;
+  min-inline-size: 70px;
+  min-block-size: 26px;
+}
+
+.header__theme-menu-button_active {
+  border: 1px solid var(--accent-color);
+  pointer-events: none;
+}
+
+.header__theme-menu-button:hover {
+  border: 1px solid var(--accent-color-transparent);
+}
+
+.header__theme-menu-button:focus-visible {
+  border-bottom: 1px solid var(--accent-color);
+}
+
+/********************* Текст шапки *********************/
+
+.focus {
+  display: block;
+  margin-bottom: 55px;
+  overflow-wrap: break-word;
+  color: var(--cool-pink);
+  font-weight: 900;
+  font-size: var(--h1-font-size);
+  line-height: 0.8;
+  text-transform: lowercase;
+}
+
+.header__nofocus {
+  text-align: start;
+}
+
+.header__info {
+  align-self: end;
+  max-width: 100%;
+  max-width: 100%;
+  margin-bottom: 66px;
+  overflow-wrap: break-word;
+  text-align: start;
+  text-wrap: balance;
+}
+
+/********************* Декор шрифтов *********************/
+
+/* Декор c заливкой фона розовым */
+
+.title-decor {
+  color: var(--bg-color);
+  background-color: var(--accent-color);
+  height: fit-content;
+}
+
+/* Декор с квадратной тенью (шапка, подвал, текст) */
+
+.text-decor {
+  text-shadow: calc(1em / 33 + 1px) calc(1em / 33 + 1px) 0 var(--accent-color);
+}
+
+/* Декор для толстых заголовков */
+
+.text-bold {
+  font-weight: 700;
+
+}
+
+.links {
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+}
+
+/********************* Основной блок *********************/
+
+.info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 80px;
+  font-size: inherit;
+}
+
+.info__article {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.info__heading {
+  color: var(--accent-color);
+}
+
+.info__text-margin {
+  margin-top: 10px;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.gallery__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/********************* Футер *********************/
+
+.footer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100dvb;
+  overflow-x: hidden;
+  overflow-wrap: break-word;
+}
+
+/********************* Для планшета и десктопа *********************/
+
+@media (width >= 600px) {
+
+  .page {
+    padding: 20px;
+  }
+
+  .header {
+    position: relative;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto 1fr auto;
+  
+  }
+
+  .header__theme-menu {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  .header__nofocus {
+    position: relative;
+    grid-column: 1 / span 3;
+    grid-row: 2;
+    align-self: center;
+    margin-bottom: 117px;
+    left: -20px;
+    top: 5px;
+  }
+
+  .header__info {
+    grid-column: 1 / span 3;
+    grid-row: 3;
+    justify-self: end;
+    margin-bottom: 114px;
+    max-inline-size: 50%;
+  }
+
+
+.info__grid--2column {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.info__grid--title {
+  grid-column: 1;
+}
+
+.info__grid--text {
+  grid-column: 2 / span 2;
+}
+
+.info__grid--3columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.gallery {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto repeat(3, auto);
+  grid-template-areas:
+    "title title title"
+    "sunset sunset dessert"
+    "tape books dessert"
+    "tape street street";
+}
+
+.gallery__title {
+  display: block;
+  grid-area: title;
+  width: 100%;
+}
+
+.gallery__image:nth-child(2) {
+  grid-area: sunset;
+}
+
+.gallery__image:nth-child(3) {
+  grid-area: dessert;
+}
+
+.gallery__image:nth-child(4) {
+  grid-area: tape;
+}
+
+.gallery__image:nth-child(5) {
+  grid-area: books;
+}
+
+.gallery__image:nth-child(6) {
+  grid-area: street;
+}
+
+.gallery__image {
+  height: 100%; /* Растягивает изображение на всю высоту ячейки */
+  object-fit: cover; /* Обрезает изображение, сохраняя пропорции */
+}
+
+}
+
+/********************* Для десктопа *********************/
+
+@media (width > 900px) {
+  .header__theme-menu {
+    grid-column: 1 / span 3;
+    grid-row: 1;
+    justify-self: center;
+    margin-bottom: 273px;
+  }
+
+  .header__theme-menu-list {
+    flex-direction: initial;
+    margin-top: initial;
+    padding-top: initial;
+  }
+
+  .info__grid--3column {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+      "title title title"
+      "multitask food gadgets";
+    gap: 20px;
+  }
+
+
+
+  .info__grid--3column--multitask {
+    grid-area: multitask;
+  }
+
+  .info__grid--3column--food {
+    grid-area: food;
+  }
+
+  .info__grid--3column--gadgets {
+    grid-area: gadgets;
+  }
+
+ 
 }
