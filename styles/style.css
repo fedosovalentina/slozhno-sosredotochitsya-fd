@@ -370,7 +370,7 @@
   .info__grid--3column {
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
-      "title title title"
+      "title . ."
       "multitask food gadgets";
   }
 }
