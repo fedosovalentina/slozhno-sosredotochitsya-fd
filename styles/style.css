@@ -71,6 +71,9 @@
 }
 
 /********************* Меню *********************/
+.header__theme-menu {
+  margin: 65px 0;
+}
 
 .header__theme-menu-list {
   z-index: 1;
@@ -78,7 +81,6 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 10px;
-  margin-top: 65px;
   list-style: none;
 }
 
@@ -93,6 +95,8 @@
   min-inline-size: 70px;
   min-block-size: 26px;
 }
+
+
 
 .header__theme-menu-button_active {
   border: 1px solid var(--accent-color);
@@ -111,7 +115,6 @@
 
 .focus {
   display: block;
-  margin-bottom: 55px;
   overflow-wrap: break-word;
   color: var(--heading-color);
   font-weight: 900;
@@ -126,9 +129,8 @@
 
 .header__info {
   align-self: end;
+  margin: 55px 0;
   max-width: 100%;
-  max-width: 100%;
-  margin-bottom: 66px;
   overflow-wrap: break-word;
   text-align: start;
   text-wrap: balance;
@@ -142,6 +144,10 @@
   color: var(--subheading-color);
   background-color: var(--highlight-color);
   height: fit-content;
+}
+
+.title-decor-margin {
+  margin-bottom: 10px;
 }
 
 /* Декор с квадратной тенью (шапка, подвал, текст) */
@@ -161,6 +167,15 @@
   color: inherit;
   font: inherit;
   text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.links:hover {
+  border-bottom: 1px solid var(--text-color);
+}
+
+.links:focus-visible {
+  border: 1px solid var(--text-color);
 }
 
 /********************* Основной блок *********************/
@@ -168,6 +183,7 @@
 .info {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   flex-grow: 1;
   gap: 80px;
   font-size: inherit;
@@ -183,9 +199,6 @@
   color: var(--accent-color);
 }
 
-.info__text-margin {
-  margin-top: 10px;
-}
 
 .gallery {
   display: grid;
@@ -227,8 +240,8 @@
   }
 
   .header__theme-menu {
+    margin: 173px 0;
     grid-column: 3;
-    grid-row: 1;
     justify-self: end;
   }
 
@@ -237,7 +250,6 @@
     grid-column: 1 / span 3;
     grid-row: 2;
     align-self: center;
-    margin-bottom: 117px;
     left: -20px;
     top: 5px;
   }
@@ -246,7 +258,7 @@
     grid-column: 1 / span 3;
     grid-row: 3;
     justify-self: end;
-    margin-bottom: 114px;
+    margin: 162px 0;
     max-inline-size: 50%;
   }
 
@@ -264,9 +276,19 @@
   grid-column: 2 / span 2;
 }
 
-.info__grid--3columns {
+.info__grid--3column {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+      "title title title"
+      "multitask multitask multitask"
+      "food food food"
+      "gadgets gadgets gadgets";
+    gap: 20px;
+}
+
+.info__grid--3column--title {
+  grid-column: 1;
 }
 
 .gallery {
@@ -317,15 +339,22 @@
 @media (width > 900px) {
   .header__theme-menu {
     grid-column: 1 / span 3;
-    grid-row: 1;
     justify-self: center;
-    margin-bottom: 273px;
+    margin: 0 0 273px;
   }
 
   .header__theme-menu-list {
     flex-direction: initial;
     margin-top: initial;
     padding-top: initial;
+  }
+
+  .header__info {
+    grid-column: 1 / span 3;
+    grid-row: 3;
+    justify-self: end;
+    margin: 114px 0;
+    max-inline-size: 50%;
   }
 
   .info__grid--3column {

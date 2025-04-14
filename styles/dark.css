@@ -5,18 +5,16 @@
 */
 
 /* Надпись REC */
-
 .header__decoration-corner {
   position: absolute;
   top: 1px;
   right: 9px;
-  z-index: 1;
+  z-index: -1;
   color: var(--accent-color, rgba(255, 0, 112, 1));
   text-transform: uppercase;
 }
 
 /* Красная точка в правом верхнем углу */
-
 .header__decoration-corner::after {
   content: "";
   display: inline-block;
@@ -31,7 +29,6 @@
 }
 
 /* Добавила немного анимации красному кружочку */
-
 @keyframes pulse {
   0% {
     opacity: 1;
@@ -60,6 +57,22 @@
     Так стили написанные ниже будут иметь больший вес,
     чем стили в медиазапросе предпочтений пользователя
   */
+  --accent-color: rgba(255, 0, 112, 1);
+  --accent-color-transparent: rgba(255, 0, 112, 0.4);
+  --heading-color: rgba(219, 0, 255, 1);
+  --subheading-color: rgba(0, 0, 40, 1);
+  --highlight-color: rgba(255, 0, 112, 1);
+
+  --bg-color: rgba(0, 0, 40, 1);
+  --text-color: rgba(241, 178, 206, 1);
+
+  --box-shadow: 4px 4px 0 var(--accent-color, rgba(255, 0, 112, 1));
+
+  --background-image: url("/images/cover-image-dark.png");
+
+  .header__decoration-corner {
+    display: block;
+  }
 }
 
 .theme-dark .page {
