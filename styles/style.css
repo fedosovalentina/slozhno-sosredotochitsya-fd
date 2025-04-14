@@ -11,8 +11,10 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: 80px;
-  max-width: 1024px; /* Ограничиваю экран */
+  justify-content: space-between;
+
+  max-width: 1024px;
+  width: 100%;
   padding: 10px;
   color: var(--text-color);
   font-family: var(--main-font-family), sans-serif;
@@ -29,10 +31,12 @@
 /********************* Шапка *********************/
 
 .header {
+  width: 100%;
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto auto auto auto;
+  margin-bottom: 40px;
 }
 
 /* Декоративные уголки */
@@ -96,8 +100,6 @@
   min-block-size: 26px;
 }
 
-
-
 .header__theme-menu-button_active {
   border: 1px solid var(--accent-color);
   pointer-events: none;
@@ -153,14 +155,14 @@
 /* Декор с квадратной тенью (шапка, подвал, текст) */
 
 .text-decor {
-  text-shadow: calc(1em / 33 + 1px) calc(1em / 33 + 1px) 0 var(--highlight-color);
+  text-shadow: calc(1em / 33 + 1px) calc(1em / 33 + 1px) 0
+    var(--highlight-color);
 }
 
 /* Декор для толстых заголовков */
 
 .text-bold {
   font-weight: 700;
-
 }
 
 .links {
@@ -187,6 +189,7 @@
   flex-grow: 1;
   gap: 80px;
   font-size: inherit;
+  padding-bottom: 80px;
 }
 
 .info__article {
@@ -198,7 +201,6 @@
 .info__heading {
   color: var(--accent-color);
 }
-
 
 .gallery {
   display: grid;
@@ -227,7 +229,6 @@
 /********************* Для планшета и десктопа *********************/
 
 @media (width >= 600px) {
-
   .page {
     padding: 20px;
   }
@@ -236,7 +237,7 @@
     position: relative;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto 1fr auto;
-  
+    margin-bottom: 40px;
   }
 
   .header__theme-menu {
@@ -250,7 +251,7 @@
     grid-column: 1 / span 3;
     grid-row: 2;
     align-self: center;
-    left: -20px;
+    transform: translateX(-20px);
     top: 5px;
   }
 
@@ -262,76 +263,85 @@
     max-inline-size: 50%;
   }
 
+  .info__grid--2column {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
 
-.info__grid--2column {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
+  .info__grid--title {
+    grid-column: 1;
+  }
 
-.info__grid--title {
-  grid-column: 1;
-}
+  .info__grid--text {
+    grid-column: 2 / span 2;
+  }
 
-.info__grid--text {
-  grid-column: 2 / span 2;
-}
+  .info__grid--3column--title {
+    grid-area: title;
+  }
 
-.info__grid--3column {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-areas:
-      "title title title"
+  .info__grid--3column--multitask {
+    grid-area: multitask;
+  }
+
+  .info__grid--3column--food {
+    grid-area: food;
+  }
+
+  .info__grid--3column--gadgets {
+    grid-area: gadgets;
+  }
+  .info__grid--3column {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+      "title . ."
       "multitask multitask multitask"
       "food food food"
       "gadgets gadgets gadgets";
     gap: 20px;
-}
+  }
 
-.info__grid--3column--title {
-  grid-column: 1;
-}
+  .gallery {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto repeat(3, auto);
+    grid-template-areas:
+      "title title title"
+      "sunset sunset dessert"
+      "tape books dessert"
+      "tape street street";
+  }
 
-.gallery {
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto repeat(3, auto);
-  grid-template-areas:
-    "title title title"
-    "sunset sunset dessert"
-    "tape books dessert"
-    "tape street street";
-}
+  .gallery__title {
+    display: block;
+    grid-area: title;
+    width: 100%;
+  }
 
-.gallery__title {
-  display: block;
-  grid-area: title;
-  width: 100%;
-}
+  .gallery__image:nth-child(2) {
+    grid-area: sunset;
+  }
 
-.gallery__image:nth-child(2) {
-  grid-area: sunset;
-}
+  .gallery__image:nth-child(3) {
+    grid-area: dessert;
+  }
 
-.gallery__image:nth-child(3) {
-  grid-area: dessert;
-}
+  .gallery__image:nth-child(4) {
+    grid-area: tape;
+  }
 
-.gallery__image:nth-child(4) {
-  grid-area: tape;
-}
+  .gallery__image:nth-child(5) {
+    grid-area: books;
+  }
 
-.gallery__image:nth-child(5) {
-  grid-area: books;
-}
+  .gallery__image:nth-child(6) {
+    grid-area: street;
+  }
 
-.gallery__image:nth-child(6) {
-  grid-area: street;
-}
-
-.gallery__image {
-  height: 100%; /* Растягивает изображение на всю высоту ячейки */
-  object-fit: cover; /* Обрезает изображение, сохраняя пропорции */
-}
-
+  .gallery__image {
+    height: 100%; /* Растягивает изображение на всю высоту ячейки */
+    object-fit: cover; /* Обрезает изображение, сохраняя пропорции */
+  }
 }
 
 /********************* Для десктопа *********************/
@@ -358,27 +368,9 @@
   }
 
   .info__grid--3column {
-    display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
       "title title title"
       "multitask food gadgets";
-    gap: 20px;
   }
-
-
-
-  .info__grid--3column--multitask {
-    grid-area: multitask;
-  }
-
-  .info__grid--3column--food {
-    grid-area: food;
-  }
-
-  .info__grid--3column--gadgets {
-    grid-area: gadgets;
-  }
-
- 
 }
