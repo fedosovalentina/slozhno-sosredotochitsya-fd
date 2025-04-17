@@ -4,53 +4,6 @@
   переключая тему
 */
 
-/* Надпись REC */
-.header__decoration-corner {
-  position: absolute;
-  top: 1px;
-  right: 9px;
-  z-index: -1;
-  color: var(--accent-color, rgba(255, 0, 112, 1));
-  text-transform: uppercase;
-}
-
-/* Красная точка в правом верхнем углу */
-.header__decoration-corner::after {
-  content: "";
-  display: inline-block;
-  width: 9px;
-  height: 9px;
-  margin-left: 10px;
-  border-radius: 50%;
-  vertical-align: 8%;
-  box-shadow: 0px 0px 4px 2px var(--accent-color, rgba(255, 0, 112, 1), 0.5);
-  background-color: var(--accent-color, rgba(255, 0, 112, 1));
-  animation: pulse 6s infinite ease-in-out;
-}
-
-/* Добавила немного анимации красному кружочку */
-@keyframes pulse {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  45% {
-    opacity: 0.9;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.1;
-    transform: scale(0.5);
-  }
-  55% {
-    opacity: 0.9;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
 
 :root.theme-dark {
   /* сохраните этот селектор в приведённом виде.
