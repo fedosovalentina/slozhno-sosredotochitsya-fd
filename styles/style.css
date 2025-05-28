@@ -1,44 +1,90 @@
-/* Основные стили проекта. Это стили для темы, которую вы верстаете первой. */
-
 .page {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-
-  max-width: 1024px;
+  justify-content: flex-start;
+  gap: 10px;
   width: 100%;
+  max-width: 1024px;
   padding: 10px;
   color: var(--text-color);
   font-family: var(--main-font-family), sans-serif;
- background: var(--bg-color) var(--background-image) no-repeat center / cover;
-  
+  background: var(--bg-color) var(--background-image) no-repeat center / cover;
 }
 
-/********************* HEADER *********************/
+.page-container {
+  width: 100%;
+  container-type: inline-size;
+  container-name: page;
+}
+
+/****************************** HEADER *********************************/
 
 .header {
-  width: 100%;
   position: relative;
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto auto auto auto auto;
-  margin-bottom: 40px;
+
+  grid-template-rows: 1fr min-content 1fr;
+  grid-template-areas:
+    "menu"
+    "logo"
+    "info";
+    gap: 55px;
+    z-index: 0;
+  transition: gap 0.5s ease;
+ 
 }
 
+@container page (min-width: 500px) {
+  .page {
+    gap: 20px;
+  }
+  .header {
+    gap: 162px;
+  }
+}
 
-/********************* MENU *********************/
+@container page (min-width: 800px) {
+ 
+  .header {
+    gap: 114px;
+  
+  }
+}
+
+/******************************* MENU *********************************/
+
 .header__theme-menu {
-  margin: 65px 0;
+  display: flex;
+  justify-content: flex-end; /* справа по горизонтали */
+  align-items: center; /* по центру по вертикали */
+  margin-top: 65px;
+  margin-bottom: 10px;
+  transition: margin 0.5s ease;
 }
 
 .header__theme-menu-list {
-  z-index: 1;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  flex-direction: column; /* по умолчанию колонка */
   gap: 10px;
-  list-style: none;
 }
+@container page (min-width: 600px) {
+  .header__theme-menu {
+    margin-top: 172px;
+}
+}
+@container page (min-width: 900px) {
+  .header__theme-menu {
+    justify-content: center; /* по центру по горизонтали */
+    align-items: flex-start; /* вверх по вертикали */
+    margin: 0px 0px 160px;
+  }
+
+  .header__theme-menu-list {
+    flex-direction: row; /* строка при ширине >800px */
+  }
+}
+
+/******************************** MENU BUTTONS ****************************/
 
 .header__theme-menu-button {
   border: 1px solid transparent;
@@ -65,7 +111,7 @@
   border-bottom: 1px solid currentColor;
 }
 
-/********************* TEXT *********************/
+/************************************ TEXT *******************************/
 
 .logo {
   display: block;
@@ -75,19 +121,35 @@
   font-size: var(--logo-font-size);
   line-height: 0.8;
   text-transform: lowercase;
+  transition: transform 0.7s ease;
+  transform: translateX(0); /* по умолчанию не смещаем */
 }
 
-.header__focus {
-  text-align: start;
+.header__logo {
+  justify-self: left;
 }
 
 .header__info {
-  align-self: end;
-  margin: 55px 0;
-  max-width: 100%;
+  width: 100%;
+  transition: width 0.5s ease;
   overflow-wrap: break-word;
   text-align: start;
   text-wrap: balance;
+}
+
+.header__info::after{
+  content: "";
+}
+
+@container page (min-width: 600px) {
+  
+  .header__logo {
+    transform: translateX(-15px); /* сдвиг влево за границу родителя */
+  }
+  .header__info {
+    margin-left: auto;
+    width: 50%;
+  }
 }
 
 /********************* DECOR *********************/
@@ -95,8 +157,9 @@
 /* Надпись REC */
 .header__decoration-corner {
   position: absolute;
-  top: 1px;
-  right: 9px;
+  top: 4px;
+  right: 10px;
+
   z-index: -1;
   color: var(--accent-color, rgba(255, 0, 112, 1));
   text-transform: uppercase;
@@ -140,7 +203,6 @@
   }
 }
 
-
 /* Декоративные уголки */
 
 .decorated__zone {
@@ -162,18 +224,18 @@
 .decorated__zone::before {
   top: 0;
   right: 0;
-  border-top: 1px solid currentColor;
-  border-right: 1px solid currentColor;
-  transform: translate(-1px, 1px); /* "внутрь" от края */
+  border-top: 1px solid var(--accent-color, rgba(255, 0, 112, 1));
+  border-right: 1px solid var(--accent-color, rgba(255, 0, 112, 1));
+  transform: translate(-1px, 1px);
 }
 
 /* Нижний левый угол */
 .decorated__zone::after {
   bottom: 0;
   left: 0;
-  border-bottom: 1px solid currentColor;
-  border-left: 1px solid currentColor;
-  transform: translate(1px, -1px); /* "внутрь" от края */
+  border-bottom: 1px solid var(--accent-color, rgba(255, 0, 112, 1));
+  border-left: 1px solid var(--accent-color, rgba(255, 0, 112, 1));
+  transform: translate(1px, -1px);
 }
 
 /********************* Декор шрифтов *********************/
@@ -181,9 +243,9 @@
 /* Декор c заливкой фона розовым */
 
 .title-decor {
+  height: fit-content;
   color: var(--subheading-color);
   background-color: var(--highlight-color);
-  height: fit-content;
 }
 
 .title-decor-margin {
@@ -204,10 +266,10 @@
 }
 
 .links {
+  border: 1px solid transparent;
   color: inherit;
   font: inherit;
   text-decoration: none;
-  border: 1px solid transparent;
 }
 
 .links:hover {
@@ -218,18 +280,16 @@
   border: 1px solid currentColor;
 }
 
-
-
 /********************* Основной блок *********************/
 
 .info {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   flex-grow: 1;
+  justify-content: space-between;
   gap: 80px;
-  font-size: inherit;
   padding-bottom: 80px;
+  font-size: inherit;
 }
 
 .info__article {
@@ -265,13 +325,15 @@
   overflow-wrap: break-word;
 }
 
-/********************* Для планшета и десктопа *********************/
+/******************** Для планшета и десктопа ********************/
 
 @media (width >= 600px) {
   .page {
+    gap: 20px;
     padding: 20px;
   }
-
+}
+/* 
   .header {
     position: relative;
     grid-template-columns: 1fr 1fr 1fr;
@@ -375,17 +437,17 @@
 
   .gallery__image:nth-child(6) {
     grid-area: street;
-  }
+  } 
 
   .gallery__image {
-    height: 100%; /* Растягивает изображение на всю высоту ячейки */
-    object-fit: cover; /* Обрезает изображение, сохраняя пропорции */
+    height: 100%;
+    object-fit: cover; 
   }
 }
 
 /********************* Для десктопа *********************/
 
-@media (width > 900px) {
+/* @media (width > 900px) {
   .header__theme-menu {
     grid-column: 1 / span 3;
     justify-self: center;
@@ -412,4 +474,4 @@
       "title . ."
       "multitask food gadgets";
   }
-}
+} */
