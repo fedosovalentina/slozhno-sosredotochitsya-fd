@@ -1,4 +1,5 @@
 .page {
+  outline: 1px dotted yellowgreen;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -17,37 +18,37 @@
   container-name: page;
 }
 
+@media (min-width: 500px) {
+  .page {
+    gap: 20px;
+    padding: 20px;
+  }
+}
+
 /****************************** HEADER *********************************/
 
 .header {
   position: relative;
   display: grid;
-
   grid-template-rows: 1fr min-content 1fr;
   grid-template-areas:
     "menu"
     "logo"
     "info";
-    gap: 55px;
-    z-index: 0;
+  gap: 55px;
+  z-index: 0;
   transition: gap 0.5s ease;
- 
 }
 
 @container page (min-width: 500px) {
-  .page {
-    gap: 20px;
-  }
   .header {
     gap: 162px;
   }
 }
 
 @container page (min-width: 800px) {
- 
   .header {
     gap: 114px;
-  
   }
 }
 
@@ -70,7 +71,7 @@
 @container page (min-width: 600px) {
   .header__theme-menu {
     margin-top: 172px;
-}
+  }
 }
 @container page (min-width: 900px) {
   .header__theme-menu {
@@ -84,7 +85,7 @@
   }
 }
 
-/******************************** MENU BUTTONS ****************************/
+/* Кнопки меню */
 
 .header__theme-menu-button {
   border: 1px solid transparent;
@@ -111,7 +112,7 @@
   border-bottom: 1px solid currentColor;
 }
 
-/************************************ TEXT *******************************/
+/* Текстовый блок хедера */
 
 .logo {
   display: block;
@@ -121,11 +122,12 @@
   font-size: var(--logo-font-size);
   line-height: 0.8;
   text-transform: lowercase;
-  transition: transform 0.7s ease;
-  transform: translateX(0); /* по умолчанию не смещаем */
 }
 
 .header__logo {
+  overflow-x: clip;
+  transition: transform 0.7s ease;
+  transform: translateX(0); /* по умолчанию не смещаем */
   justify-self: left;
 }
 
@@ -137,12 +139,11 @@
   text-wrap: balance;
 }
 
-.header__info::after{
+.header__info::after {
   content: "";
 }
 
 @container page (min-width: 600px) {
-  
   .header__logo {
     transform: translateX(-15px); /* сдвиг влево за границу родителя */
   }
@@ -265,6 +266,14 @@
   font-weight: 700;
 }
 
+/* Декор для заголовков низкого уровня */
+
+.info__heading {
+  color: var(--accent-color);
+}
+
+/* Декор для ссылок */
+
 .links {
   border: 1px solid transparent;
   color: inherit;
@@ -290,22 +299,65 @@
   gap: 80px;
   padding-bottom: 80px;
   font-size: inherit;
+  margin-top: 40px;
+  transition: margin 0.5s ease;
 }
 
 .info__article {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
+  gap: 10px;
 }
 
-.info__heading {
-  color: var(--accent-color);
+@container page (min-width: 500px) {
+  .info {
+    margin-top: 60px;
+  }
+
+  .info__article {
+    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Названия статей всегда */
+  .info__article > :nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .info > :nth-child(3) > :nth-child(1) {
+    grid-row: 1 / span 2;
+  }
+
+  /* Остальные элементы внутри 1-го и 3-го info__article */
+  .info > :nth-child(1) > :nth-child(n + 2),
+  .info > :nth-child(3) > :nth-child(n + 2) {
+    grid-column: 2 / 4;
+    grid-row: auto;
+  }
 }
+
+/* Второй блок текстовые блоки растягиваются на три столбца */
+@container page (min-width: 500px) and (max-width: 800px) {
+  .info > :nth-child(2) > :nth-child(n + 2) {
+    grid-column: 1 / 4;
+  }
+}
+
+/* Вторую строку занимает второй ребенок остальные выстраиваются за ним автоматически в колонки*/
+@container page (min-width: 800px) {
+  .info > :nth-child(2) > :nth-child(n + 2) {
+    grid-row: 2;
+  }
+}
+
+/********************* Галерея *********************/
 
 .gallery {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
+  gap: 10px;
 }
 
 .gallery__image {
@@ -314,95 +366,7 @@
   height: auto;
 }
 
-/********************* Футер *********************/
-
-.footer {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100dvb;
-  overflow-wrap: break-word;
-}
-
-/******************** Для планшета и десктопа ********************/
-
-@media (width >= 600px) {
-  .page {
-    gap: 20px;
-    padding: 20px;
-  }
-}
-/* 
-  .header {
-    position: relative;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto 1fr auto;
-    margin-bottom: 40px;
-  }
-
-  .header__theme-menu {
-    margin: 173px 0;
-    grid-column: 3;
-    justify-self: end;
-  }
-
-  .header__logo {
-    position: relative;
-    grid-column: 1 / span 3;
-    grid-row: 2;
-    align-self: center;
-    transform: translateX(-20px);
-    top: 5px;
-  }
-
-  .header__info {
-    grid-column: 1 / span 3;
-    grid-row: 3;
-    justify-self: end;
-    margin: 162px 0;
-    max-inline-size: 50%;
-  }
-
-  .info__grid--2column {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .info__grid--title {
-    grid-column: 1;
-  }
-
-  .info__grid--text {
-    grid-column: 2 / span 2;
-  }
-
-  .info__grid--3column--title {
-    grid-area: title;
-  }
-
-  .info__grid--3column--multitask {
-    grid-area: multitask;
-  }
-
-  .info__grid--3column--food {
-    grid-area: food;
-  }
-
-  .info__grid--3column--gadgets {
-    grid-area: gadgets;
-  }
-  .info__grid--3column {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-areas:
-      "title . ."
-      "multitask multitask multitask"
-      "food food food"
-      "gadgets gadgets gadgets";
-    gap: 20px;
-  }
-
+@container page (min-width: 500px) {
   .gallery {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto repeat(3, auto);
@@ -411,6 +375,7 @@
       "sunset sunset dessert"
       "tape books dessert"
       "tape street street";
+    gap: 20px;
   }
 
   .gallery__title {
@@ -437,41 +402,22 @@
 
   .gallery__image:nth-child(6) {
     grid-area: street;
-  } 
+  }
 
   .gallery__image {
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
   }
 }
 
-/********************* Для десктопа *********************/
+/********************* Футер *********************/
 
-/* @media (width > 900px) {
-  .header__theme-menu {
-    grid-column: 1 / span 3;
-    justify-self: center;
-    margin: 0 0 273px;
-  }
-
-  .header__theme-menu-list {
-    flex-direction: initial;
-    margin-top: initial;
-    padding-top: initial;
-  }
-
-  .header__info {
-    grid-column: 1 / span 3;
-    grid-row: 3;
-    justify-self: end;
-    margin: 114px 0;
-    max-inline-size: 50%;
-  }
-
-  .info__grid--3column {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-areas:
-      "title . ."
-      "multitask food gadgets";
-  }
-} */
+.footer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  overflow-wrap: break-word;
+}
