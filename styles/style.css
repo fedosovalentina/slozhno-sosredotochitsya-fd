@@ -36,7 +36,6 @@
   z-index: 0;
   transition: gap 0.5s ease;
   min-height: 648px;
-  height: 100vh;
   box-sizing: border-box;
 }
 
