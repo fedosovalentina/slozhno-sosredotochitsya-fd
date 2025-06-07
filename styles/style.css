@@ -4,11 +4,12 @@
   justify-content: flex-start;
   gap: 10px;
   width: 100%;
-  max-width: 1024px;
+  max-width: 1200px;
   padding: 10px;
   color: var(--text-color);
-  font-family: var(--main-font-family), sans-serif;
+  font-family: var(--main-font-family), monospace;
   background: var(--bg-color) var(--background-image) no-repeat center / cover;
+  background-attachment: fixed;
 }
 
 .page-container {
@@ -17,7 +18,7 @@
   container-name: page;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 768px) {
   .page {
     gap: 20px;
     padding: 20px;
@@ -29,25 +30,29 @@
 .header {
   position: relative;
   display: grid;
-  grid-template-rows: 1fr min-content 1fr;
-  grid-template-areas:
-    "menu"
-    "logo"
-    "info";
+  grid-template-rows: 1fr min-content min-content;
   gap: 55px;
+  padding-bottom: 55px;
   z-index: 0;
   transition: gap 0.5s ease;
+  min-height: 648px;
+  transition: height 0.5s ease;
+  box-sizing: border-box;
 }
 
-@container page (min-width: 500px) {
+@container page (min-width: 700px) {
   .header {
+    min-height: 984px;
     gap: 162px;
+    padding-bottom: 162px;
   }
 }
 
-@container page (min-width: 800px) {
+@container page (min-width: 950px) {
   .header {
+    min-height: 728px;
     gap: 114px;
+    padding-bottom: 114px;
   }
 }
 
@@ -67,12 +72,12 @@
   flex-direction: column; /* по умолчанию колонка */
   gap: 10px;
 }
-@container page (min-width: 600px) {
+@container page (min-width: 700px) {
   .header__theme-menu {
     margin-top: 172px;
   }
 }
-@container page (min-width: 900px) {
+@container page (min-width: 950px) {
   .header__theme-menu {
     justify-content: center; /* по центру по горизонтали */
     align-items: flex-start; /* вверх по вертикали */
@@ -80,7 +85,7 @@
   }
 
   .header__theme-menu-list {
-    flex-direction: row; /* строка при ширине >800px */
+    flex-direction: row;
   }
 }
 
@@ -101,6 +106,10 @@
 .header__theme-menu-button_active {
   border: 1px solid currentColor;
   pointer-events: none;
+}
+
+.header__theme-menu-button:focus {
+  outline: none;
 }
 
 .header__theme-menu-button:hover {
@@ -136,13 +145,16 @@
   overflow-wrap: break-word;
   text-align: start;
   text-wrap: balance;
+  /* margin-bottom: 56px;
+  transition: margin 0.7s ease; */
+  align-self: center;
 }
 
 .header__info::after {
   content: "";
 }
 
-@container page (min-width: 600px) {
+@container page (min-width: 700px) {
   .header__logo {
     transform: translateX(-15px); /* сдвиг влево за границу родителя */
   }
@@ -177,30 +189,6 @@
   box-shadow: 0px 0px 4px 2px var(--accent-color, rgba(255, 0, 112, 1), 0.5);
   background-color: var(--accent-color, rgba(255, 0, 112, 1));
   animation: pulse 6s infinite ease-in-out;
-}
-
-/* Добавила немного анимации красному кружочку */
-@keyframes pulse {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  45% {
-    opacity: 0.9;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.1;
-    transform: scale(0.5);
-  }
-  55% {
-    opacity: 0.9;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
 }
 
 /* Декоративные уголки */
@@ -243,13 +231,12 @@
 /* Декор c заливкой фона розовым */
 
 .title-decor {
-  height: fit-content;
   color: var(--subheading-color);
   background-color: var(--highlight-color);
 }
 
-.title-decor-margin {
-  margin-bottom: 10px;
+.info__text-margin {
+  margin-top: 10px;
 }
 
 /* Декор с квадратной тенью (шапка, подвал, текст) */
@@ -280,6 +267,10 @@
   text-decoration: none;
 }
 
+.links:focus {
+  outline: none;
+}
+
 .links:hover {
   border-bottom: 1px solid currentColor;
 }
@@ -295,8 +286,8 @@
   flex-direction: column;
   flex-grow: 1;
   justify-content: space-between;
-  gap: 80px;
-  padding-bottom: 80px;
+  gap: 50px;
+  padding-bottom: 50px;
   font-size: inherit;
   margin-top: 40px;
   transition: margin 0.5s ease;
@@ -304,59 +295,75 @@
 
 .info__article {
   display: grid;
+  grid-auto-flow: row;
   grid-template-columns: 1fr;
   gap: 10px;
 }
+.info__article .info__paragraph:not(:last-child) > *:last-child {
+  margin-bottom: 10px;
+}
 
-@container page (min-width: 500px) {
+@container page (min-width: 700px) {
   .info {
     margin-top: 60px;
+    gap: 80px;
+    padding-bottom: 80px;
   }
 
   .info__article {
-    gap: 20px;
-    display: grid;
+    grid-auto-flow: row;
     grid-template-columns: repeat(3, 1fr);
   }
 
-  /* Названия статей всегда */
-  .info__article > :nth-child(1) {
+  .info__title {
     grid-column: 1;
-    grid-row: 1;
-  }
-
-  .info > :nth-child(3) > :nth-child(1) {
     grid-row: 1 / span 2;
   }
 
-  /* Остальные элементы внутри 1-го и 3-го info__article */
-  .info > :nth-child(1) > :nth-child(n + 2),
-  .info > :nth-child(3) > :nth-child(n + 2) {
-    grid-column: 2 / 4;
-    grid-row: auto;
+  .info__grid--title {
+    grid-column: 2 / span 2;
+    margin-bottom: 10px;
+  }
+
+  .info__why-focus-hard .info__paragraph,
+  .info__focus-improvement .info__paragraph {
+    grid-column: 2 / span 2;
   }
 }
 
-/* Второй блок текстовые блоки растягиваются на три столбца */
-@container page (min-width: 500px) and (max-width: 800px) {
-  .info > :nth-child(2) > :nth-child(n + 2) {
-    grid-column: 1 / 4;
-  }
+.info__focus-distractions .info__paragraph {
+  grid-column: 1 / span 3;
 }
 
-/* Вторую строку занимает второй ребенок остальные выстраиваются за ним автоматически в колонки*/
-@container page (min-width: 800px) {
-  .info > :nth-child(2) > :nth-child(n + 2) {
-    grid-row: 2;
+@container page (min-width: 950px) {
+  .info__article {
+    grid-auto-flow: row;
+  }
+
+  .info__focus-distractions .info__title {
+    max-width: calc(100% / 3);
+    grid-row: 1;
+    grid-column: 1 / -1;
+  }
+
+  .info__focus-distractions .info__paragraph {
+    grid-column: auto;
   }
 }
 
 /********************* Галерея *********************/
 
-.gallery {
+.gallery__title {
+  margin-bottom: 10px;
+}
+
+.gallery__list {
   display: grid;
   grid-template-columns: 1fr;
   gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 .gallery__image {
@@ -365,8 +372,8 @@
   height: auto;
 }
 
-@container page (min-width: 500px) {
-  .gallery {
+@container page (min-width: 700px) {
+  .gallery__list {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto repeat(3, auto);
     grid-template-areas:
@@ -378,28 +385,26 @@
   }
 
   .gallery__title {
-    display: block;
-    grid-area: title;
-    width: 100%;
+    margin-bottom: 0px;
   }
 
-  .gallery__image:nth-child(2) {
+  .gallery__item:nth-child(1) {
     grid-area: sunset;
   }
 
-  .gallery__image:nth-child(3) {
+  .gallery__item:nth-child(2) {
     grid-area: dessert;
   }
 
-  .gallery__image:nth-child(4) {
+  .gallery__item:nth-child(3) {
     grid-area: tape;
   }
 
-  .gallery__image:nth-child(5) {
+  .gallery__item:nth-child(4) {
     grid-area: books;
   }
 
-  .gallery__image:nth-child(6) {
+  .gallery__item:nth-child(5) {
     grid-area: street;
   }
 
@@ -412,11 +417,12 @@
 /********************* Футер *********************/
 
 .footer {
+  min-height: 100vh;
+  box-sizing: border-box;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   width: 100%;
   overflow-wrap: break-word;
 }

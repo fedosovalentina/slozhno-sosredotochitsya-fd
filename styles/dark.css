@@ -21,7 +21,7 @@
 
   --box-shadow: 4px 4px 0 var(--accent-color, rgba(255, 0, 112, 1));
 
-  --background-image: url("/images/cover-image-dark.png");
+  --background-image: url("../images/cover-image-dark.png");
 
   .header__decoration-corner {
     display: block;
